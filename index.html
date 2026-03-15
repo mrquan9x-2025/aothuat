@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title> 946 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
+    <title>1010 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -11,37 +11,37 @@
             background: linear-gradient(to bottom, #f0f8ff, #e6f2ff);
             color: #222;
             margin: 0;
-            padding: 0;
+            padding: 10px 0; /* giảm padding top/bottom */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* sát đầu trang hơn */
         }
         .container {
             width: 100%;
             max-width: 720px;
-            padding: 20px;
+            padding: 10px; /* giảm padding */
             box-sizing: border-box;
         }
         h1 {
             color: #c62828;
             font-size: clamp(1.8rem, 6vw, 2.4rem);
-            margin: 0.5em 0;
+            margin: 0.3em 0; /* giảm margin top */
             text-align: center;
         }
         .stage {
             background: white;
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            padding: clamp(20px, 5vw, 32px);
-            margin: 20px auto;
+            padding: clamp(15px, 4vw, 25px); /* giảm padding */
+            margin: 10px auto; /* giảm margin giữa các stage */
             text-align: center;
         }
         p, .question-text {
             font-size: clamp(1.1rem, 4vw, 1.25rem);
             line-height: 1.55;
-            margin: 1em 0;
+            margin: 0.8em 0;
         }
         .highlight {
             color: #d32f2f;
@@ -50,35 +50,23 @@
         .numbers {
             font-size: clamp(1.15rem, 4.5vw, 1.4rem);
             line-height: 1.7;
-            margin: 1.5em 0;
-            padding: 16px;
+            margin: 1.2em 0;
+            padding: 12px;
             background: #f9f9f9;
             border-radius: 12px;
             border: 1px solid #e0e0e0;
         }
-        /* Nút chung */
-		.btn {
-			font-size: clamp(1rem, 4vw, 1.2rem);  /* nhỏ hơn một chút */
-			padding: 12px 32px;                   /* giảm padding để gọn */
-			margin: 0.8em 0.4em;                  /* giảm margin */
-			min-width: 120px;                     /* tránh nút quá hẹp */
-			max-width: 45%;                       /* giới hạn rộng để 2 nút fit ngang */
-			box-sizing: border-box;
-			border-radius: 50px;
-			cursor: pointer;
-			transition: all 0.2s;
-		}
-		
-		/* Container chứa 2 nút */
-			#stage-question > div:last-child {     /* div chứa 2 nút */
-			display: flex;
-			flex-wrap: nowrap;                 /* Không cho wrap xuống dòng */
-			justify-content: center;
-			align-items: center;
-			gap: 16px;                         /* khoảng cách giữa 2 nút */
-			margin-top: 20px;
-			}
-		
+        .btn {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            padding: 12px 32px;
+            margin: 0.8em 0.4em;
+            min-width: 120px;
+            max-width: 45%;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
         .btn.primary {
             background: #1976d2;
             color: white;
@@ -86,6 +74,14 @@
         .btn.primary:hover {
             background: #1565c0;
             transform: translateY(-2px);
+        }
+        #stage-question > div:last-child {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
         }
         #result {
             font-size: clamp(1.6rem, 6vw, 2.2rem);
@@ -96,46 +92,42 @@
             font-size: clamp(2.2rem, 8vw, 3.5rem);
             margin: 0.4em;
         }
-        @media (max-width: 480px) {
-            .container { padding: 12px; }
-            .btn { padding: 12px 32px; font-size: 1.1rem; }
+        .magic-gif {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 15px 0;
         }
-		
-		/* Trên mobile nhỏ (dưới ~480px) */
-		@media (max-width: 480px) {
-		.btn {
-        font-size: clamp(0.95rem, 4.2vw, 1.1rem);
-        padding: 10px 28px;
-        min-width: 110px;
-        max-width: 48%;                /* tăng nhẹ để fit vừa */
-		}
-    
-		#stage-question > div:last-child {
-        gap: 12px;
-			}
-		}
-		
+        @media (max-width: 480px) {
+            .container { padding: 8px; }
+            .btn { padding: 10px 28px; font-size: 1.05rem; min-width: 110px; max-width: 48%; }
+            #stage-question > div:last-child { gap: 12px; }
+            body { padding: 5px 0; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
 
+    <!-- Giới thiệu -->
     <div id="stage-intro" class="stage">
-        <h1>🔮 Một chút ảo thuật nhỏ...</h1>
+        <h1> Một chút ảo thuật nhỏ...</h1>
         <p>Hãy nghĩ thật kỹ đến <strong>một ngày thật đặc biệt</strong> với bạn.</p>
-        <p>Ví dụ: ngày sinh nhật, ngày cưới, ngày gặp người ấy, ngày tốt nghiệp, ngày kỷ niệm quan trọng... bất kỳ ngày nào bạn muốn.</p>
+        <p>Ví dụ: ngày sinh nhật, ngày tốt nghiệp, ngày kỷ niệm quan trọng... bất kỳ ngày nào bạn muốn.</p>
         <p>Đừng nói ra nhé. Chỉ cần giữ trong đầu.</p>
-        <button class="btn primary" id="startBtn">Tôi đã nghĩ xong →</button>
+        <button class="btn primary" id="startBtn">Tôi đã nghĩ xong</button>
     </div>
 
+    <!-- Hướng dẫn -->
     <div id="stage-guide" class="stage" style="display:none;">
         <h1>Tiếp theo nhé...</h1>
         <p>Tôi sẽ đưa ra từng dãy số một.</p>
         <p>Bạn chỉ cần trả lời <strong>Có</strong> hoặc <strong>Không</strong> tùy theo dãy số đó có chứa ngày/tháng bạn đang nghĩ hay không.</p>
-        <button class="btn primary" id="nextFromGuide">Bắt đầu thôi! →</button>
+        <button class="btn primary" id="nextFromGuide">Bắt đầu thôi!</button>
     </div>
 
+    <!-- Hỏi từng dãy -->
     <div id="stage-question" class="stage" style="display:none;">
         <p class="question-text" id="questionText"></p>
         <div class="numbers" id="numbersDisplay"></div>
@@ -145,11 +137,20 @@
         </div>
     </div>
 
+    <!-- Slide trung gian: Ảo thuật gia -->
+    <div id="stage-thinking" class="stage" style="display:none;">
+        <p>Tôi đang cố gắng nhìn thấu tâm trí bạn...</p>
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDBheXMwOXR6YWE2N3czdXRncmRsd2owMm84cmpoaG9qdHA2amtsZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Cx0ZDb335IDYxOW7cI/giphy.gif" 
+             alt="Ảo thuật gia" class="magic-gif">
+        <br><button class="btn primary" id="nextToResult">Tiếp theo</button>
+    </div>
+
+    <!-- Kết quả -->
     <div id="stage-result" class="stage" style="display:none;">
-        <h1>Kết quả đây...</h1>
+        <h1>Tôi đã biết...</h1>
         <p id="result" class="result-text"></p>
         <div class="emoji">🎉✨🎂</div>
-        <button class="btn primary" id="restartBtn">Thử lại với ngày khác</button>
+        <button class="btn primary" id="restartBtn">Thử lại</button>
     </div>
 
 </div>
@@ -187,37 +188,27 @@
     const intro = document.getElementById("stage-intro");
     const guide = document.getElementById("stage-guide");
     const question = document.getElementById("stage-question");
+    const thinking = document.getElementById("stage-thinking");
     const resultStage = document.getElementById("stage-result");
     const questionText = document.getElementById("questionText");
     const numbersDisplay = document.getElementById("numbersDisplay");
     const resultText = document.getElementById("result");
 
     function showStage(target) {
-        [intro, guide, question, resultStage].forEach(el => {
+        [intro, guide, question, thinking, resultStage].forEach(el => {
             el.style.display = (el === target) ? "block" : "none";
         });
-        if (target === resultStage) {
+        if (target === resultStage || target === thinking) {
             target.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     }
 
-    function sequentialReveal(container, callback) {
-        const paragraphs = container.querySelectorAll("p");
-        paragraphs.forEach((p, i) => {
-            p.style.opacity = "0";
-            setTimeout(() => p.style.opacity = "1", 900 + i * 1400);
-        });
-        setTimeout(callback, 900 + paragraphs.length * 1400 + 1000);
-    }
-
     function showIntro() {
         showStage(intro);
-        sequentialReveal(intro, () => {});
     }
 
     function startGame() {
         showStage(guide);
-        sequentialReveal(guide, () => {});
     }
 
     function beginQuestions() {
@@ -230,8 +221,7 @@
 
     function showNextQuestion() {
         if (currentIndex >= allGroups.length) {
-            console.log("Hoàn thành. Tổng day:", totalDay, "tháng:", totalMonth);
-            showResult();
+            showStage(thinking); // Chuyển sang slide ảo thuật gia
             return;
         }
 
@@ -244,7 +234,6 @@
     }
 
     window.answer = function(choice) {
-        console.log("Câu hỏi", currentIndex + 1, ":", choice);
         if (choice === 'yes') {
             const group = allGroups[currentIndex];
             if (group.isDay) totalDay += group.value;
@@ -255,22 +244,22 @@
     };
 
     function showResult() {
-        console.log("Hiển thị kết quả...");
         showStage(resultStage);
 
         const day = (totalDay >= 1 && totalDay <= 31) ? totalDay : "??";
         const month = (totalMonth >= 1 && totalMonth <= 12) ? totalMonth : "??";
 
         if (day === "??" || month === "??") {
-            resultText.innerHTML = `Có vẻ bạn đã nhầm ở đâu đó (hoặc bỏ sót nhóm nào đó).<br>Hãy thử lại nhé! 😊`;
+            resultText.innerHTML = `Có vẻ bạn đã nhầm hoặc bỏ sót nhóm nào đó.<br>Hãy thử lại nhé! 😊`;
         } else {
-            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là<br><span style="font-size:1.4em">ngày ${day} tháng ${month}</span> phải không?`;
+            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là<br><span style="font-size:1.4em"> ${day} tháng ${month}</span>!`;
             launchConfetti();
         }
     }
 
     document.getElementById("startBtn").onclick = startGame;
     document.getElementById("nextFromGuide").onclick = beginQuestions;
+    document.getElementById("nextToResult").onclick = showResult; // Nút Tiếp theo từ slide ảo thuật gia
     document.getElementById("restartBtn").onclick = showIntro;
 
     showIntro();
