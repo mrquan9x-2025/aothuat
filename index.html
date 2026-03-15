@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>1010 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
+    <title>1053 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -11,31 +11,31 @@
             background: linear-gradient(to bottom, #f0f8ff, #e6f2ff);
             color: #222;
             margin: 0;
-            padding: 10px 0; /* giảm padding top/bottom */
+            padding: 10px 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* sát đầu trang hơn */
+            justify-content: flex-start;
         }
         .container {
             width: 100%;
             max-width: 720px;
-            padding: 10px; /* giảm padding */
+            padding: 10px;
             box-sizing: border-box;
         }
         h1 {
             color: #c62828;
             font-size: clamp(1.8rem, 6vw, 2.4rem);
-            margin: 0.3em 0; /* giảm margin top */
+            margin: 0.3em 0;
             text-align: center;
         }
         .stage {
             background: white;
             border-radius: 16px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            padding: clamp(15px, 4vw, 25px); /* giảm padding */
-            margin: 10px auto; /* giảm margin giữa các stage */
+            padding: clamp(15px, 4vw, 25px);
+            margin: 10px auto;
             text-align: center;
         }
         p, .question-text {
@@ -93,16 +93,30 @@
             margin: 0.4em;
         }
         .magic-gif {
-            max-width: 100%;
+            max-width: 300px;          /* Giới hạn tối đa 300px */
+            width: 100%;               /* Co lại theo màn hình nhỏ */
             height: auto;
             border-radius: 12px;
-            margin: 15px 0;
+            margin: 10px 0 8px 0;      /* Giảm khoảng cách: trên 10px, dưới 8px */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #stage-thinking h1 {
+            margin-bottom: 8px;        /* Giảm khoảng cách chữ và ảnh */
+        }
+        #stage-thinking p {
+            margin: 0 0 8px 0;         /* Giảm khoảng cách chữ và ảnh */
+        }
+        #nextToResult {
+            margin-top: 8px;           /* Giảm khoảng cách ảnh và nút */
         }
         @media (max-width: 480px) {
             .container { padding: 8px; }
             .btn { padding: 10px 28px; font-size: 1.05rem; min-width: 110px; max-width: 48%; }
             #stage-question > div:last-child { gap: 12px; }
             body { padding: 5px 0; }
+            .magic-gif { max-width: 260px; } /* Nhỏ hơn một chút trên mobile */
         }
     </style>
 </head>
@@ -112,16 +126,15 @@
 
     <!-- Giới thiệu -->
     <div id="stage-intro" class="stage">
-        <h1> Một chút ảo thuật nhỏ...</h1>
         <p>Hãy nghĩ thật kỹ đến <strong>một ngày thật đặc biệt</strong> với bạn.</p>
-        <p>Ví dụ: ngày sinh nhật, ngày tốt nghiệp, ngày kỷ niệm quan trọng... bất kỳ ngày nào bạn muốn.</p>
+        <p>Ví dụ: ngày sinh nhật, ngày tốt nghiệp, ngày kỷ niệm... bất kỳ ngày nào bạn muốn.</p>
         <p>Đừng nói ra nhé. Chỉ cần giữ trong đầu.</p>
         <button class="btn primary" id="startBtn">Tôi đã nghĩ xong</button>
     </div>
 
     <!-- Hướng dẫn -->
     <div id="stage-guide" class="stage" style="display:none;">
-        <h1>Tiếp theo nhé...</h1>
+        <h2>Tiếp theo...</h2>
         <p>Tôi sẽ đưa ra từng dãy số một.</p>
         <p>Bạn chỉ cần trả lời <strong>Có</strong> hoặc <strong>Không</strong> tùy theo dãy số đó có chứa ngày/tháng bạn đang nghĩ hay không.</p>
         <button class="btn primary" id="nextFromGuide">Bắt đầu thôi!</button>
@@ -137,19 +150,19 @@
         </div>
     </div>
 
-    <!-- Slide trung gian: Ảo thuật gia -->
+    <!-- Slide trung gian: Ảo thuật gia (Hello Kitty phù thủy) -->
     <div id="stage-thinking" class="stage" style="display:none;">
         <p>Tôi đang cố gắng nhìn thấu tâm trí bạn...</p>
         <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDBheXMwOXR6YWE2N3czdXRncmRsd2owMm84cmpoaG9qdHA2amtsZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Cx0ZDb335IDYxOW7cI/giphy.gif" 
              alt="Ảo thuật gia" class="magic-gif">
-        <br><button class="btn primary" id="nextToResult">Tiếp theo</button>
+        <button class="btn primary" id="nextToResult">Tiếp theo</button>
     </div>
 
     <!-- Kết quả -->
     <div id="stage-result" class="stage" style="display:none;">
         <h1>Tôi đã biết...</h1>
         <p id="result" class="result-text"></p>
-        <div class="emoji">🎉✨🎂</div>
+        <div class="emoji">🔮🎉✨</div>
         <button class="btn primary" id="restartBtn">Thử lại</button>
     </div>
 
@@ -221,7 +234,7 @@
 
     function showNextQuestion() {
         if (currentIndex >= allGroups.length) {
-            showStage(thinking); // Chuyển sang slide ảo thuật gia
+            showStage(thinking);
             return;
         }
 
@@ -250,16 +263,16 @@
         const month = (totalMonth >= 1 && totalMonth <= 12) ? totalMonth : "??";
 
         if (day === "??" || month === "??") {
-            resultText.innerHTML = `Có vẻ bạn đã nhầm hoặc bỏ sót nhóm nào đó.<br>Hãy thử lại nhé! 😊`;
+            resultText.innerHTML = `Có vẻ bạn đã nhầm hoặc bỏ sót nhóm nào đó.<br>Hãy thử lại nhé!`;
         } else {
-            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là<br><span style="font-size:1.4em"> ${day} tháng ${month}</span>!`;
+            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là<br><span style="font-size:1.4em"> ${day} tháng ${month}</span>`;
             launchConfetti();
         }
     }
 
     document.getElementById("startBtn").onclick = startGame;
     document.getElementById("nextFromGuide").onclick = beginQuestions;
-    document.getElementById("nextToResult").onclick = showResult; // Nút Tiếp theo từ slide ảo thuật gia
+    document.getElementById("nextToResult").onclick = showResult;
     document.getElementById("restartBtn").onclick = showIntro;
 
     showIntro();
