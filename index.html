@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>933 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
+    <title>945 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
         /* HIỆU ỨNG CHUYỂN CẢNH MƯỢT MÀ */
@@ -304,7 +304,7 @@
              alt="Ảo thuật gia" class="magic-gif">
              
         <div class="slider-wrapper">
-            <div class="slider-text">Kéo để xem kết quả ➜</div>
+            <div class="slider-text">Kéo để xem kết quả</div>
             <input type="range" min="0" max="100" value="0" class="magic-slider" id="resultSlider">
         </div>
     </div>
@@ -346,15 +346,15 @@
     ];
 
     const mysticNames =[
-        "✦ Trận Đồ Sơ Khởi ✦",
-        "✦ Dấu Ấn Lưu Ly ✦",
-        "✦ Mảnh Ghép Thời Không ✦",
-        "✦ Tinh Mộc Linh Tự ✦",
-        "✦ Bản Ngã Tinh Tú ✦",
-        "✧ Khởi Nguyên Nguyệt Trượng ✧",
-        "✧ Dòng Chảy Thiên Hà ✧",
-        "✧ Ảo Ảnh Không Gian ✧",
-        "✧ Mật Ngữ Cuối Cùng ✧"
+        "✦ Sơ Khởi ✦",
+        "✦ Lưu Ly ✦",
+        "✦ Thiên Lang ✦",
+        "✦ Tinh Mộc ✦",
+        "✦ Ảo Ảnh ✦",
+        "✧ Khởi Nguyên ✧",
+        "✧ Thiên Hà ✧",
+        "✧ Tinh Tú ✧",
+        "✧ Mật Ngữ ✧"
     ];
 
     let allGroups =[...dayGroups.map(g => ({...g, isDay: true})), ...monthGroups.map(g => ({...g, isDay: false}))];
@@ -461,7 +461,7 @@
             resultText.innerHTML = `Có vẻ bạn đã nhầm hoặc bỏ sót nhóm nào đó.<br>Hãy thử lại nhé!`;
         } else {
             resultIconEl.innerText = userChosenIcon; // Đưa icon đã chọn ra màn hình KQ
-            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là:<br><div class="result-box">Ngày <span>${day}</span> / <span>${month}</span></div>`;
+            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là:<br><div class="result-box">Ngày <span>${day}</span> tháng <span>${month}</span></div>`;
             launchConfetti();
         }
     }
