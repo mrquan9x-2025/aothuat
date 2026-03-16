@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>959 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
+    <title>Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
         /* HIỆU ỨNG CHUYỂN CẢNH MƯỢT MÀ */
@@ -267,7 +267,7 @@
 
     <!-- Màn hình chọn Icon mới thêm -->
     <div id="stage-icons" class="stage" style="display:none;">
-        <p>Chạm vào biểu tượng liên quan đến ngày đó:</p>
+        <p>Chọn một biểu tượng liên quan đến ngày đó:</p>
         <div class="icon-grid">
             <div class="magic-icon-btn" onclick="chooseIcon('🎂', this)">🎂</div>
             <div class="magic-icon-btn" onclick="chooseIcon('🎆', this)">🎆</div>
@@ -434,7 +434,7 @@
 
         questionText.innerHTML = group.isDay
             ? 'Dãy số này có chứa <span class="highlight">NGÀY</span> mà bạn nghĩ đến không?'
-            : 'Dãy số này có chứa <span class="highlight">THÁNG</span> mà bạn nghĩ đến không?';
+            : 'Dãy số này có chứa <span style=\"color: #e6cf07; font-weight: bold;\">THÁNG</span> mà bạn nghĩ đến không?';
 
         numbersDisplay.textContent = group.numbers;
     }
