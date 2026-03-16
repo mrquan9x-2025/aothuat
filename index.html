@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>913 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
+    <title>933 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
         /* HIỆU ỨNG CHUYỂN CẢNH MƯỢT MÀ */
@@ -63,9 +63,41 @@
             font-weight: bold;
         }
 
-        /* YÊU CẦU 1: TÊN DÃY SỐ HUYỀN BÍ */
+        /* --- CSS MỚI CHO LƯỚI 6 ICON --- */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Chia 3 cột, tự động thành 2 hàng */
+            gap: 15px;
+            margin: 20px 0 10px 0;
+        }
+        .magic-icon-btn {
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 15px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .magic-icon-btn:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.7);
+        }
+        /* Hiệu ứng nháy sáng nhẹ khi chạm */
+        .magic-icon-btn.flash {
+            animation: flashLight 0.3s forwards;
+        }
+        @keyframes flashLight {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(25, 118, 210, 0.9)) brightness(1.3); background: rgba(255,255,255,0.9); }
+            100% { transform: scale(1.05); filter: brightness(1); }
+        }
+
         .mystic-title {
-            color: #4a148c; /* Màu tím đậm huyền bí */
+            color: #4a148c;
             font-size: clamp(1.2rem, 4.5vw, 1.4rem);
             font-style: italic;
             font-weight: 800;
@@ -113,7 +145,6 @@
             margin-top: 15px;
         }
 
-        /* YÊU CẦU 2: THANH KÉO (SLIDER) & ẢNH GIF */
         .magic-gif {
             max-width: 300px;
             width: 100%;
@@ -143,7 +174,7 @@
             color: #1976d2;
             font-weight: bold;
             font-size: 1.05rem;
-            pointer-events: none; /* Xuyên qua text để kéo được thanh slider */
+            pointer-events: none;
             z-index: 1;
             animation: pulseText 1.5s infinite;
         }
@@ -190,7 +221,6 @@
             background-repeat: no-repeat;
         }
 
-        /* YÊU CẦU 3: KHUNG KẾT QUẢ BO GÓC NỔI BẬT */
         .result-box {
             display: inline-block;
             background: rgba(255, 255, 255, 0.95);
@@ -203,21 +233,23 @@
             color: #d32f2f;
             font-weight: 900;
         }
-        .result-box span { color: #1976d2; } /* Số màu xanh cho nổi bật */
+        .result-box span { color: #1976d2; }
         
         .emoji {
-            font-size: clamp(2.2rem, 8vw, 3.5rem);
-            margin: 0.4em;
+            font-size: clamp(3rem, 10vw, 4.5rem);
+            margin: 0.3em;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.5s ease-out;
         }
 
-        /* RESPONSIVE CHO MOBILE */
         @media (max-width: 480px) {
             .container { padding: 8px; }
             .btn { padding: 10px 28px; font-size: 1.05rem; min-width: 110px; max-width: 48%; }
             #stage-question > div:last-child { gap: 12px; }
             body { padding: 5px 0; }
-            /* GIẢM ẢNH GIF CÒN KHOẢNG 80% NHƯ YÊU CẦU */
-            .magic-gif { max-width: 208px; } 
+            .magic-gif { max-width: 208px; }
+            .icon-grid { gap: 10px; }
+            .magic-icon-btn { padding: 10px 0; }
         }
     </style>
 </head>
@@ -233,6 +265,19 @@
         <button class="btn primary" id="startBtn">Tôi đã nghĩ xong</button>
     </div>
 
+    <!-- Màn hình chọn Icon mới thêm -->
+    <div id="stage-icons" class="stage" style="display:none;">
+        <p>Chạm vào biểu tượng liên quan đến ngày đó:</p>
+        <div class="icon-grid">
+            <div class="magic-icon-btn" onclick="chooseIcon('🎂', this)">🎂</div>
+            <div class="magic-icon-btn" onclick="chooseIcon('🎆', this)">🎆</div>
+            <div class="magic-icon-btn" onclick="chooseIcon('❤️', this)">❤️</div>
+            <div class="magic-icon-btn" onclick="chooseIcon('🏡', this)">🏡</div>
+            <div class="magic-icon-btn" onclick="chooseIcon('🌱', this)">🌱</div>
+            <div class="magic-icon-btn" onclick="chooseIcon('💯', this)">💯</div>
+        </div>
+    </div>
+
     <!-- Hướng dẫn -->
     <div id="stage-guide" class="stage" style="display:none;">
         <h2>Tiếp theo...</h2>
@@ -243,7 +288,7 @@
 
     <!-- Hỏi từng dãy -->
     <div id="stage-question" class="stage" style="display:none;">
-        <div id="mysticName" class="mystic-title"></div> <!-- Thêm Tiêu đề huyền bí -->
+        <div id="mysticName" class="mystic-title"></div>
         <p class="question-text" id="questionText"></p>
         <div class="numbers" id="numbersDisplay"></div>
         <div>
@@ -258,7 +303,6 @@
         <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDBheXMwOXR6YWE2N3czdXRncmRsd2owMm84cmpoaG9qdHA2amtsZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Cx0ZDb335IDYxOW7cI/giphy.gif" 
              alt="Ảo thuật gia" class="magic-gif">
              
-        <!-- Thanh kéo thay cho nút Next -->
         <div class="slider-wrapper">
             <div class="slider-text">Kéo để xem kết quả ➜</div>
             <input type="range" min="0" max="100" value="0" class="magic-slider" id="resultSlider">
@@ -268,8 +312,9 @@
     <!-- Kết quả -->
     <div id="stage-result" class="stage" style="display:none;">
         <h1>Tôi đã biết...</h1>
+        <!-- Nơi chứa icon người dùng đã chọn -->
+        <div class="emoji" id="resultIcon"></div>
         <p id="result" class="result-text"></p>
-        <div class="emoji">🔮🎉✨</div>
         <button class="btn primary" id="restartBtn">Thử lại</button>
     </div>
 
@@ -300,7 +345,6 @@
         { value: 8,  numbers: "8, 9, 10, 11, 12" }
     ];
 
-    // Tên huyền bí cho 9 câu hỏi (5 ngày + 4 tháng)
     const mysticNames =[
         "✦ Trận Đồ Sơ Khởi ✦",
         "✦ Dấu Ấn Lưu Ly ✦",
@@ -317,8 +361,10 @@
     let currentIndex = 0;
     let totalDay = 0;
     let totalMonth = 0;
+    let userChosenIcon = ''; // Biến lưu icon đã chọn
 
     const intro = document.getElementById("stage-intro");
+    const iconsStage = document.getElementById("stage-icons"); // Màn hình icon
     const guide = document.getElementById("stage-guide");
     const question = document.getElementById("stage-question");
     const thinking = document.getElementById("stage-thinking");
@@ -328,15 +374,16 @@
     const numbersDisplay = document.getElementById("numbersDisplay");
     const resultText = document.getElementById("result");
     const resultSlider = document.getElementById("resultSlider");
+    const resultIconEl = document.getElementById("resultIcon");
 
     function showStage(target) {
-        [intro, guide, question, thinking, resultStage].forEach(el => {
+        // Cập nhật mảng bao gồm cả iconsStage
+        [intro, iconsStage, guide, question, thinking, resultStage].forEach(el => {
             el.style.display = (el === target) ? "block" : "none";
         });
         if (target === resultStage || target === thinking) {
             target.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-        // Reset slider khi mở lại màn hình thinking
         if(target === thinking) {
             resultSlider.value = 0;
         }
@@ -346,9 +393,23 @@
         showStage(intro);
     }
 
-    function startGame() {
-        showStage(guide);
+    function showIconsScreen() {
+        showStage(iconsStage);
     }
+
+    // Hàm xử lý khi bấm vào icon
+    window.chooseIcon = function(icon, element) {
+        userChosenIcon = icon; // Lưu icon
+        
+        // Thêm class nháy sáng
+        element.classList.add('flash');
+        
+        // Đợi 300ms (0.3s) cho hiệu ứng xong thì chuyển tiếp
+        setTimeout(() => {
+            element.classList.remove('flash');
+            showStage(guide);
+        }, 300);
+    };
 
     function beginQuestions() {
         showStage(question);
@@ -370,7 +431,6 @@
 
         const group = allGroups[currentIndex];
         
-        // Cập nhật tên huyền bí
         mysticNameEl.innerText = mysticNames[currentIndex];
 
         questionText.innerHTML = group.isDay
@@ -397,23 +457,21 @@
         const month = (totalMonth >= 1 && totalMonth <= 12) ? totalMonth : "??";
 
         if (day === "??" || month === "??") {
+            resultIconEl.innerText = '🤔'; // Icon bối rối nếu sai
             resultText.innerHTML = `Có vẻ bạn đã nhầm hoặc bỏ sót nhóm nào đó.<br>Hãy thử lại nhé!`;
         } else {
-            // Thay đổi cấu trúc HTML để thêm class khung kết quả
+            resultIconEl.innerText = userChosenIcon; // Đưa icon đã chọn ra màn hình KQ
             resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là:<br><div class="result-box">Ngày <span>${day}</span> / <span>${month}</span></div>`;
             launchConfetti();
         }
     }
 
-    // --- LOGIC CHO THANH KÉO (SLIDER) ---
     resultSlider.addEventListener('input', function() {
-        // Nếu người dùng kéo vượt quá 90% -> Mở kết quả
         if (this.value >= 90) {
             showResult();
         }
     });
     
-    // Nếu người dùng thả tay ra mà chưa kéo đến đích -> trượt lại về mốc 0
     function snapBack() {
         if (resultSlider.value < 90) {
             resultSlider.value = 0;
@@ -423,7 +481,8 @@
     resultSlider.addEventListener('touchend', snapBack);
     resultSlider.addEventListener('mouseup', snapBack);
 
-    document.getElementById("startBtn").onclick = startGame;
+    // Chỉnh sửa sự kiện nút Bắt đầu
+    document.getElementById("startBtn").onclick = showIconsScreen;
     document.getElementById("nextFromGuide").onclick = beginQuestions;
     document.getElementById("restartBtn").onclick = showIntro;
 
