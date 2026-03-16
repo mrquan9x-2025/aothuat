@@ -3,24 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
+    <title>913 Ảo Thuật - Ngày Đặc Biệt Bạn Đang Nghĩ</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
         /* HIỆU ỨNG CHUYỂN CẢNH MƯỢT MÀ */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         body {
             font-family: system-ui, -apple-system, sans-serif;
-            /* 1. ẢNH NỀN FULL MÀN HÌNH */
             background: url('https://files.catbox.moe/n2w1ip.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #222;
@@ -44,43 +37,55 @@
             margin: 0.3em 0;
             text-align: center;
         }
+        
+        /* HIỆU ỨNG KÍNH MỜ */
         .stage {
-            /* 2. HIỆU ỨNG KÍNH MỜ (ĐỘ TRONG SUỐT 55%) */
             background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-            
-            /* GIỮ NGUYÊN KÍCH THƯỚC VÀ CĂN LỀ */
             border-radius: 16px;
             padding: clamp(15px, 4vw, 25px);
             margin: 10px auto;
             text-align: center;
-
-            /* 3. GỌI ANIMATION CHUYỂN CẢNH */
             animation: fadeInUp 0.4s ease-out;
         }
+        
         p, .question-text {
             font-size: clamp(1.1rem, 4vw, 1.25rem);
             line-height: 1.55;
             margin: 0.8em 0;
-            font-weight: 500; /* Tăng độ đậm của chữ một chút cho dễ đọc trên nền kính */
+            font-weight: 500;
         }
         .highlight {
             color: #d32f2f;
             font-weight: bold;
         }
+
+        /* YÊU CẦU 1: TÊN DÃY SỐ HUYỀN BÍ */
+        .mystic-title {
+            color: #4a148c; /* Màu tím đậm huyền bí */
+            font-size: clamp(1.2rem, 4.5vw, 1.4rem);
+            font-style: italic;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+            letter-spacing: 1px;
+        }
+
         .numbers {
             font-size: clamp(1.15rem, 4.5vw, 1.4rem);
             line-height: 1.7;
-            margin: 1.2em 0;
+            margin: 0.8em 0 1.2em 0;
             padding: 12px;
-            /* Điều chỉnh nền ô số đồng bộ với hiệu ứng kính mờ */
             background: rgba(255, 255, 255, 0.65);
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 12px;
+            font-weight: bold;
+            color: #333;
         }
+        
         .btn {
             font-size: clamp(1rem, 4vw, 1.2rem);
             padding: 12px 32px;
@@ -93,10 +98,7 @@
             transition: all 0.2s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        .btn.primary {
-            background: #1976d2;
-            color: white;
-        }
+        .btn.primary { background: #1976d2; color: white; }
         .btn.primary:hover {
             background: #1565c0;
             transform: translateY(-2px);
@@ -108,42 +110,114 @@
             justify-content: center;
             align-items: center;
             gap: 16px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
-        #result {
-            font-size: clamp(1.6rem, 6vw, 2.2rem);
-            color: #c62828;
-            font-weight: bold;
-        }
-        .emoji {
-            font-size: clamp(2.2rem, 8vw, 3.5rem);
-            margin: 0.4em;
-        }
+
+        /* YÊU CẦU 2: THANH KÉO (SLIDER) & ẢNH GIF */
         .magic-gif {
             max-width: 300px;
             width: 100%;
             height: auto;
             border-radius: 12px;
-            margin: 10px 0 8px 0;
+            margin: 5px auto 15px auto;
             display: block;
-            margin-left: auto;
-            margin-right: auto;
         }
-        #stage-thinking h1 {
-            margin-bottom: 8px;
+        
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 280px;
+            margin: 10px auto;
+            height: 54px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+            border: 2px solid rgba(25, 118, 210, 0.3);
+            overflow: hidden;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
         }
-        #stage-thinking p {
-            margin: 0 0 8px 0;
+        .slider-text {
+            position: absolute;
+            width: 100%;
+            line-height: 54px;
+            text-align: center;
+            color: #1976d2;
+            font-weight: bold;
+            font-size: 1.05rem;
+            pointer-events: none; /* Xuyên qua text để kéo được thanh slider */
+            z-index: 1;
+            animation: pulseText 1.5s infinite;
         }
-        #nextToResult {
-            margin-top: 8px;
+        @keyframes pulseText {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
         }
+        .magic-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            position: absolute;
+            top: 0; left: 0;
+            margin: 0;
+            z-index: 2;
+            outline: none;
+        }
+        .magic-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 54px;
+            height: 54px;
+            background: #1976d2;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>');
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .magic-slider::-moz-range-thumb {
+            width: 54px;
+            height: 54px;
+            background: #1976d2;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>');
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* YÊU CẦU 3: KHUNG KẾT QUẢ BO GÓC NỔI BẬT */
+        .result-box {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px dashed #c62828;
+            border-radius: 20px;
+            padding: 15px 35px;
+            margin-top: 15px;
+            box-shadow: 0 10px 25px rgba(198, 40, 40, 0.25);
+            font-size: clamp(2rem, 7vw, 2.8rem);
+            color: #d32f2f;
+            font-weight: 900;
+        }
+        .result-box span { color: #1976d2; } /* Số màu xanh cho nổi bật */
+        
+        .emoji {
+            font-size: clamp(2.2rem, 8vw, 3.5rem);
+            margin: 0.4em;
+        }
+
+        /* RESPONSIVE CHO MOBILE */
         @media (max-width: 480px) {
             .container { padding: 8px; }
             .btn { padding: 10px 28px; font-size: 1.05rem; min-width: 110px; max-width: 48%; }
             #stage-question > div:last-child { gap: 12px; }
             body { padding: 5px 0; }
-            .magic-gif { max-width: 260px; }
+            /* GIẢM ẢNH GIF CÒN KHOẢNG 80% NHƯ YÊU CẦU */
+            .magic-gif { max-width: 208px; } 
         }
     </style>
 </head>
@@ -169,6 +243,7 @@
 
     <!-- Hỏi từng dãy -->
     <div id="stage-question" class="stage" style="display:none;">
+        <div id="mysticName" class="mystic-title"></div> <!-- Thêm Tiêu đề huyền bí -->
         <p class="question-text" id="questionText"></p>
         <div class="numbers" id="numbersDisplay"></div>
         <div>
@@ -177,12 +252,17 @@
         </div>
     </div>
 
-    <!-- Slide trung gian: Ảo thuật gia (Hello Kitty phù thủy) -->
+    <!-- Slide trung gian: Ảo thuật gia -->
     <div id="stage-thinking" class="stage" style="display:none;">
         <p>Tôi đang cố gắng nhìn thấu tâm trí bạn...</p>
         <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDBheXMwOXR6YWE2N3czdXRncmRsd2owMm84cmpoaG9qdHA2amtsZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Cx0ZDb335IDYxOW7cI/giphy.gif" 
              alt="Ảo thuật gia" class="magic-gif">
-        <button class="btn primary" id="nextToResult">Tiếp theo</button>
+             
+        <!-- Thanh kéo thay cho nút Next -->
+        <div class="slider-wrapper">
+            <div class="slider-text">Kéo để xem kết quả ➜</div>
+            <input type="range" min="0" max="100" value="0" class="magic-slider" id="resultSlider">
+        </div>
     </div>
 
     <!-- Kết quả -->
@@ -220,6 +300,19 @@
         { value: 8,  numbers: "8, 9, 10, 11, 12" }
     ];
 
+    // Tên huyền bí cho 9 câu hỏi (5 ngày + 4 tháng)
+    const mysticNames =[
+        "✦ Trận Đồ Sơ Khởi ✦",
+        "✦ Dấu Ấn Lưu Ly ✦",
+        "✦ Mảnh Ghép Thời Không ✦",
+        "✦ Tinh Mộc Linh Tự ✦",
+        "✦ Bản Ngã Tinh Tú ✦",
+        "✧ Khởi Nguyên Nguyệt Trượng ✧",
+        "✧ Dòng Chảy Thiên Hà ✧",
+        "✧ Ảo Ảnh Không Gian ✧",
+        "✧ Mật Ngữ Cuối Cùng ✧"
+    ];
+
     let allGroups =[...dayGroups.map(g => ({...g, isDay: true})), ...monthGroups.map(g => ({...g, isDay: false}))];
     let currentIndex = 0;
     let totalDay = 0;
@@ -231,8 +324,10 @@
     const thinking = document.getElementById("stage-thinking");
     const resultStage = document.getElementById("stage-result");
     const questionText = document.getElementById("questionText");
+    const mysticNameEl = document.getElementById("mysticName");
     const numbersDisplay = document.getElementById("numbersDisplay");
     const resultText = document.getElementById("result");
+    const resultSlider = document.getElementById("resultSlider");
 
     function showStage(target) {
         [intro, guide, question, thinking, resultStage].forEach(el => {
@@ -240,6 +335,10 @@
         });
         if (target === resultStage || target === thinking) {
             target.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        // Reset slider khi mở lại màn hình thinking
+        if(target === thinking) {
+            resultSlider.value = 0;
         }
     }
 
@@ -265,15 +364,18 @@
             return;
         }
 
-        // Tái kích hoạt hiệu ứng mượt mà khi đổi câu hỏi
         question.style.animation = 'none';
-        question.offsetHeight; // Kích hoạt reflow
+        question.offsetHeight; 
         question.style.animation = 'fadeInUp 0.4s ease-out';
 
         const group = allGroups[currentIndex];
+        
+        // Cập nhật tên huyền bí
+        mysticNameEl.innerText = mysticNames[currentIndex];
+
         questionText.innerHTML = group.isDay
-            ? 'Trong dãy số sau có <span class="highlight">NGÀY</span> mà bạn đang nghĩ đến không?'
-            : 'Trong dãy số sau có <span class="highlight">THÁNG</span> mà bạn đang nghĩ đến không?';
+            ? 'Dãy số này có chứa <span class="highlight">NGÀY</span> mà bạn nghĩ đến không?'
+            : 'Dãy số này có chứa <span class="highlight">THÁNG</span> mà bạn nghĩ đến không?';
 
         numbersDisplay.textContent = group.numbers;
     }
@@ -297,14 +399,32 @@
         if (day === "??" || month === "??") {
             resultText.innerHTML = `Có vẻ bạn đã nhầm hoặc bỏ sót nhóm nào đó.<br>Hãy thử lại nhé!`;
         } else {
-            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là<br><span style="font-size:1.4em"> ${day} tháng ${month}</span>`;
+            // Thay đổi cấu trúc HTML để thêm class khung kết quả
+            resultText.innerHTML = `Ngày đặc biệt bạn nghĩ đến là:<br><div class="result-box">Ngày <span>${day}</span> / <span>${month}</span></div>`;
             launchConfetti();
         }
     }
 
+    // --- LOGIC CHO THANH KÉO (SLIDER) ---
+    resultSlider.addEventListener('input', function() {
+        // Nếu người dùng kéo vượt quá 90% -> Mở kết quả
+        if (this.value >= 90) {
+            showResult();
+        }
+    });
+    
+    // Nếu người dùng thả tay ra mà chưa kéo đến đích -> trượt lại về mốc 0
+    function snapBack() {
+        if (resultSlider.value < 90) {
+            resultSlider.value = 0;
+        }
+    }
+    resultSlider.addEventListener('change', snapBack);
+    resultSlider.addEventListener('touchend', snapBack);
+    resultSlider.addEventListener('mouseup', snapBack);
+
     document.getElementById("startBtn").onclick = startGame;
     document.getElementById("nextFromGuide").onclick = beginQuestions;
-    document.getElementById("nextToResult").onclick = showResult;
     document.getElementById("restartBtn").onclick = showIntro;
 
     showIntro();
